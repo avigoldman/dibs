@@ -245,17 +245,6 @@ The CLI always exits with code 0 when given valid arguments, regardless of check
 4. **Scoring** — each variant gets a weighted score based on platform importance
 5. **Recommendation** — variants are ranked by score, the best is highlighted with a verdict
 
-### Packages Used
-
-| Check | Package |
-|---|---|
-| npm | [`npm-name`](https://www.npmjs.com/package/npm-name) |
-| GitHub, Instagram, TikTok, YouTube | [`@17secrets/usernames`](https://www.npmjs.com/package/@17secrets/usernames) |
-| Domains | [`whoiser`](https://www.npmjs.com/package/whoiser) (WHOIS) |
-| X/Twitter, LinkedIn, Reddit | Direct HTTP checks |
-| PyPI, crates.io, RubyGems, Go, Homebrew, Docker Hub | Public API checks |
-| USPTO Trademark | TSDR API (best-effort) |
-
 ## Development
 
 ```sh
@@ -284,4 +273,4 @@ npm link
 
 ## License
 
-ISC
+MIT
