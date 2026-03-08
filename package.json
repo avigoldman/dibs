@@ -1,0 +1,44 @@
+{
+  "name": "dibs-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "dibs": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "vitest run tests/integration.test.ts --config vitest.integration.config.ts"
+  },
+  "keywords": [
+    "cli",
+    "name",
+    "availability",
+    "domain",
+    "npm",
+    "github",
+    "social",
+    "trademark",
+    "brand"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "Call dibs on a name — check availability across domains, social media, package registries, and trademarks.",
+  "dependencies": {
+    "@17secrets/usernames": "^0.0.4",
+    "@clack/prompts": "^1.1.0",
+    "citty": "^0.2.1",
+    "npm-name": "^8.1.0",
+    "picocolors": "^1.1.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "vitest": "^3.2.4",
+    "whoiser": "^2.0.0-beta.10"
+  }
+}
