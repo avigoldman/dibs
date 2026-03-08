@@ -29,6 +29,7 @@ import {
   runCheckers,
   type RunOptions,
 } from "./checkers/index";
+import { parseDomainInput, platformNames, type PlatformNames } from "./domain-name";
 import {
   ALL_PATTERNS,
   PREFIX_PATTERNS,
@@ -198,6 +199,19 @@ const main = defineCommand({
       );
     }
 
+    // ── 1b. Detect domain input (e.g. "customer.io", "open.ai") ──
+    const domainInput = parseDomainInput(name);
+    let pNames: PlatformNames | undefined;
+    if (domainInput.isDomain) {
+      name = domainInput.baseName;
+      pNames = platformNames(domainInput.baseName, domainInput.detectedTld);
+      if (!isMachine) {
+        p.log.info(
+          `Detected domain input — checking "${name}" with TLD ${domainInput.detectedTld}`
+        );
+      }
+    }
+
     // ── 2. Platforms ─────────────────────────────────────────
     let checkerIds: string[] | undefined;
     if (args.only) {
@@ -290,10 +304,23 @@ const main = defineCommand({
       tlds = selected;
     }
 
+    // Ensure detected TLD is always included
+    if (domainInput.detectedTld && wantsDomains) {
+      if (!tlds) {
+        tlds = [...DEFAULT_TLDS];
+      }
+      if (!tlds.includes(domainInput.detectedTld)) {
+        tlds.unshift(domainInput.detectedTld);
+      }
+    }
+
     // ── 4. Variants ──────────────────────────────────────────
     let variants: Variant[];
 
-    if (args.variants) {
+    if (domainInput.isDomain) {
+      // Never generate variants for domain inputs
+      variants = [{ name: cleanName(name), pattern: null }];
+    } else if (args.variants) {
       const raw = args.variants.trim();
       if (raw === "all") {
         variants = generateVariants(name);
@@ -355,7 +382,7 @@ const main = defineCommand({
     }
 
     // ── 5. Run checks ────────────────────────────────────────
-    const runOpts: RunOptions = { checkerIds, tlds };
+    const runOpts: RunOptions = { checkerIds, tlds, platformNames: pNames };
     const platformCount = checkerIds ? checkerIds.length : ALL_CHECKER_IDS.length;
 
     let spinner: ReturnType<typeof p.spinner> | undefined;
