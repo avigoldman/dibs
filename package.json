@@ -49,6 +49,7 @@
     "@17secrets/usernames": "^0.0.4",
     "@clack/prompts": "^1.1.0",
     "citty": "^0.2.1",
+    "conf": "^15.1.0",
     "global-tld-list": "^1.25.21",
     "npm-name": "^8.1.0",
     "picocolors": "^1.1.1",

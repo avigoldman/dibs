@@ -44,6 +44,7 @@ const PLATFORM_WEIGHTS: Record<string, number> = {
   TikTok: 5,
   YouTube: 5,
   Reddit: 4,
+  Ghost: 2,
 
   // Packages
   npm: 3,
