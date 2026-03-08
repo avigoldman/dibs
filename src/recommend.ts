@@ -159,6 +159,8 @@ function buildDetails(vr: VariantResult): string[] {
       details.push("✓ No USPTO trademark conflicts found");
     } else if (tm.status === "taken") {
       details.push("⚠ Possible USPTO trademark conflict — consult a lawyer before proceeding");
+    } else if (tm.status === "error") {
+      details.push("⚠ Could not check USPTO trademarks automatically — verify manually");
     }
   }
 
