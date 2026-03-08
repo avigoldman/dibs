@@ -47,6 +47,7 @@ const PLATFORM_WEIGHTS: Record<string, number> = {
 
   // Packages
   npm: 3,
+  "npm org": 3,
   PyPI: 2,
   "crates.io": 2,
   RubyGems: 2,
@@ -129,9 +130,16 @@ function buildDetails(vr: VariantResult): string[] {
 
   // Package registries
   const packages = results.filter((r) =>
-    ["npm", "PyPI", "crates.io", "RubyGems", "Go (pkg.go.dev)", "Homebrew", "Docker Hub"].some(
-      (s) => r.platform === s
-    )
+    [
+      "npm",
+      "npm org",
+      "PyPI",
+      "crates.io",
+      "RubyGems",
+      "Go (pkg.go.dev)",
+      "Homebrew",
+      "Docker Hub",
+    ].some((s) => r.platform === s)
   );
   const pkgAvailable = packages.filter((r) => r.status === "available").length;
   const pkgTotal = packages.filter((r) => r.status !== "error").length;

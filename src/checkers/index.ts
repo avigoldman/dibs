@@ -2,7 +2,7 @@ export type { CheckResult, CheckStatus } from "./types";
 export { DEFAULT_TLDS, getAllTlds, isValidTld } from "./domain";
 
 import type { CheckResult } from "./types";
-import { checkNpm } from "./npm";
+import { checkNpm, checkNpmOrg } from "./npm";
 import { checkGitHub } from "./github";
 import { checkDomains, DEFAULT_TLDS } from "./domain";
 import { checkTwitter } from "./twitter";
@@ -67,6 +67,7 @@ export const PLATFORM_CHECKERS: CheckerDef[] = [
 
   // Package registries
   { id: "npm", label: "npm", category: "package", run: safe("npm", checkNpm) },
+  { id: "npm-org", label: "npm org", category: "package", run: safe("npm org", checkNpmOrg) },
   { id: "pypi", label: "PyPI", category: "package", run: safe("PyPI", checkPyPI) },
   { id: "crates", label: "crates.io", category: "package", run: safe("crates.io", checkCratesIO) },
   { id: "rubygems", label: "RubyGems", category: "package", run: safe("RubyGems", checkRubyGems) },
