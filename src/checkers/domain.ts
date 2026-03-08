@@ -20,7 +20,12 @@ export function isValidTld(tld: string): boolean {
   return TLDs.isValid(clean.toLowerCase());
 }
 
-function isDomainAvailable(whoisData: Record<string, unknown>): boolean {
+type DomainStatus = "available" | "taken" | "error";
+
+function isDomainAvailable(whoisData: Record<string, unknown>): DomainStatus {
+  // If the WHOIS lookup returned an error, we can't determine availability
+  if (whoisData["error"]) return "error";
+
   const text = whoisData["text"];
   if (Array.isArray(text)) {
     const joined = text.join(" ").toLowerCase();
@@ -32,14 +37,15 @@ function isDomainAvailable(whoisData: Record<string, unknown>): boolean {
       joined.includes("domain not found") ||
       joined.includes("is available")
     ) {
-      return true;
+      return "available";
     }
   }
 
   const domainName = whoisData["Domain Name"];
-  if (!domainName) return true;
+  if (domainName) return "taken";
 
-  return false;
+  // No error, no domain name, no recognizable text — inconclusive
+  return "error";
 }
 
 export async function checkDomain(name: string, tld: string): Promise<CheckResult> {
@@ -50,11 +56,18 @@ export async function checkDomain(name: string, tld: string): Promise<CheckResul
 
   const raw = await whoisDomain(domain, { timeout: 8000, follow: 1 });
   const data = firstResult(raw);
+  const status = isDomainAvailable(data);
 
-  if (isDomainAvailable(data)) {
-    return { platform: `Domain ${domain}`, status: "available", url };
+  if (status === "error") {
+    return {
+      platform: `Domain ${domain}`,
+      status: "error",
+      url,
+      message: (data["error"] as string) || "WHOIS lookup inconclusive",
+    };
   }
-  return { platform: `Domain ${domain}`, status: "taken", url };
+
+  return { platform: `Domain ${domain}`, status, url };
 }
 
 export async function checkDomains(
