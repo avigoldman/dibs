@@ -18,6 +18,7 @@ import { checkReddit } from "./reddit";
 import { checkDockerHub } from "./dockerhub";
 import { checkGoPkg } from "./go";
 import { checkRubyGems } from "./rubygems";
+import { checkGhost } from "./ghost";
 
 export interface CheckerDef {
   id: string;
@@ -84,6 +85,9 @@ export const PLATFORM_CHECKERS: CheckerDef[] = [
     category: "package",
     run: safe("Docker Hub", checkDockerHub),
   },
+
+  // Blogging
+  { id: "ghost", label: "Ghost", category: "social", run: safe("Ghost", checkGhost) },
 
   // Legal
   {
