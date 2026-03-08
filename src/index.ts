@@ -200,11 +200,11 @@ const main = defineCommand({
         process.exit(1);
       }
     } else if (isInteractive) {
+      const allPlatformIds = ["domain", ...PLATFORM_CHECKERS.map((c) => c.id)];
       const selected = guard(
         await p.multiselect({
           message: "Which platforms to check?",
           options: [
-            { value: "all", label: "All", hint: "check everything" },
             { value: "domain", label: "Domains", hint: "domain" },
             ...PLATFORM_CHECKERS.map((c) => ({
               value: c.id,
@@ -212,10 +212,10 @@ const main = defineCommand({
               hint: c.category,
             })),
           ],
-          initialValues: ["all"],
+          initialValues: allPlatformIds,
         })
       );
-      if (!selected.includes("all")) {
+      if (selected.length < allPlatformIds.length) {
         checkerIds = selected;
       }
     }
@@ -265,20 +265,11 @@ const main = defineCommand({
       const selected = guard(
         await p.multiselect({
           message: "Which TLDs to check?",
-          options: [
-            {
-              value: "default",
-              label: `Defaults (${DEFAULT_TLDS.join(", ")})`,
-              hint: "recommended",
-            },
-            ...POPULAR_TLDS.map((tld) => ({ value: tld, label: tld })),
-          ],
-          initialValues: ["default"],
+          options: POPULAR_TLDS.map((tld) => ({ value: tld, label: tld })),
+          initialValues: DEFAULT_TLDS,
         })
       );
-      if (!selected.includes("default")) {
-        tlds = selected;
-      }
+      tlds = selected;
     }
 
     // ── 4. Variants ──────────────────────────────────────────
