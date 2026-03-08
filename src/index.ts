@@ -198,6 +198,22 @@ const main = defineCommand({
       );
     }
 
+    // ── 1b. Detect domain input (e.g. "example.com", "open.ai") ──
+    let detectedTld: string | null = null;
+    const dotIndex = name.lastIndexOf(".");
+    if (dotIndex > 0) {
+      const possibleTld = name.slice(dotIndex); // e.g. ".com"
+      if (isValidTld(possibleTld)) {
+        detectedTld = possibleTld;
+        name = name.slice(0, dotIndex); // strip TLD from name
+        if (!isMachine) {
+          p.log.info(
+            `Detected domain input — checking "${name}" and ensuring ${detectedTld} is included`
+          );
+        }
+      }
+    }
+
     // ── 2. Platforms ─────────────────────────────────────────
     let checkerIds: string[] | undefined;
     if (args.only) {
@@ -288,6 +304,16 @@ const main = defineCommand({
       );
       config.set("tlds", selected);
       tlds = selected;
+    }
+
+    // Ensure detected TLD is always included
+    if (detectedTld && wantsDomains) {
+      if (!tlds) {
+        tlds = [...DEFAULT_TLDS];
+      }
+      if (!tlds.includes(detectedTld)) {
+        tlds.unshift(detectedTld);
+      }
     }
 
     // ── 4. Variants ──────────────────────────────────────────
