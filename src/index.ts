@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { defineCommand, runMain } from "citty";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
+
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json");
 import {
   ALL_CHECKER_IDS,
   DEFAULT_TLDS,
@@ -115,7 +119,7 @@ NON-INTERACTIVE USE (for scripts and LLMs):
 const main = defineCommand({
   meta: {
     name: "dibs",
-    version: "1.0.0",
+    version,
     description: DESCRIPTION,
   },
   args: {
