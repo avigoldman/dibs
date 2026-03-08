@@ -1,5 +1,5 @@
 export type { CheckResult, CheckStatus } from "./types.js";
-export { DEFAULT_TLDS, ALL_TLDS } from "./domain.js";
+export { DEFAULT_TLDS, getAllTlds, isValidTld } from "./domain.js";
 
 import type { CheckResult } from "./types.js";
 import { checkNpm } from "./npm.js";

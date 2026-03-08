@@ -24,13 +24,19 @@
     "trademark",
     "brand"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Avi Goldman <me@avigoldman.com> (https://avigoldman.com)",
+  "homepage": "https://dibs.avigoldman.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avigoldman/dibs.git"
+  },
+  "license": "MIT",
   "description": "Call dibs on a name — check availability across domains, social media, package registries, and trademarks.",
   "dependencies": {
     "@17secrets/usernames": "^0.0.4",
     "@clack/prompts": "^1.1.0",
     "citty": "^0.2.1",
+    "global-tld-list": "^1.25.21",
     "npm-name": "^8.1.0",
     "picocolors": "^1.1.1",
     "tsx": "^4.21.0",

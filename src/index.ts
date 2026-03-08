@@ -5,8 +5,9 @@ import * as p from "@clack/prompts";
 import pc from "picocolors";
 import {
   ALL_CHECKER_IDS,
-  ALL_TLDS,
   DEFAULT_TLDS,
+  getAllTlds,
+  isValidTld,
   PLATFORM_CHECKERS,
   runCheckers,
   type CheckResult,
@@ -73,8 +74,7 @@ VARIANT PATTERNS (off by default):
 
 TLDs (--tlds/-t to override):
   Default: com, dev, io, ai, co, app
-  All available: com, dev, io, ai, co, app, org, net, sh, so, run, to, me, cc,
-                 xyz, tech, tools, design, studio, inc
+  Any valid IANA TLD is supported (1400+). Pass any TLD and it will be validated.
 
 OUTPUT FORMATS (--format/-f):
   pretty    Human-readable report with colors, bars, and icons (default)
@@ -127,7 +127,7 @@ const main = defineCommand({
     },
     tlds: {
       type: "string",
-      description: `TLDs to check, comma-separated (default: ${DEFAULT_TLDS.map((t) => t.replace(".", "")).join(",")}) (all: ${ALL_TLDS.map((t) => t.replace(".", "")).join(",")})`,
+      description: `TLDs to check, comma-separated (default: ${DEFAULT_TLDS.map((t) => t.replace(".", "")).join(",")}). Any valid IANA TLD is supported (1400+).`,
       alias: "t",
     },
     variants: {
@@ -216,13 +216,26 @@ const main = defineCommand({
         const t = s.trim();
         return t.startsWith(".") ? t : `.${t}`;
       });
+      const invalid = tlds.filter((t) => !isValidTld(t));
+      if (invalid.length) {
+        const msg = `Unknown TLD(s): ${invalid.join(", ")}. Use any valid IANA TLD (e.g. com, dev, io, ai, co, app, org, net, xyz, ...)`;
+        if (isMachine) { console.error(msg); process.exit(1); }
+        p.log.error(msg);
+        process.exit(1);
+      }
     } else if (isInteractive && wantsDomains) {
+      const POPULAR_TLDS = [
+        ".com", ".dev", ".io", ".ai", ".co", ".app",
+        ".org", ".net", ".sh", ".so", ".run", ".to",
+        ".me", ".cc", ".xyz", ".tech", ".tools",
+        ".design", ".studio", ".inc",
+      ];
       const selected = guard(
         await p.multiselect({
           message: "Which TLDs to check?",
           options: [
             { value: "default", label: `Defaults (${DEFAULT_TLDS.join(", ")})`, hint: "recommended" },
-            ...ALL_TLDS.map((tld) => ({ value: tld, label: tld })),
+            ...POPULAR_TLDS.map((tld) => ({ value: tld, label: tld })),
           ],
           initialValues: ["default"],
         })
