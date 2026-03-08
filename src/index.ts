@@ -5,8 +5,22 @@ import { defineCommand, runMain } from "citty";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 
+import Conf from "conf";
+
 const require = createRequire(import.meta.url);
 const { version } = require("../package.json");
+
+interface SavedConfig {
+  platforms?: string[];
+  tlds?: string[];
+  variants?: boolean;
+  variantPatterns?: string[];
+}
+
+const config = new Conf<SavedConfig>({
+  projectName: "calldibs",
+  defaults: {},
+});
 import {
   ALL_CHECKER_IDS,
   DEFAULT_TLDS,
@@ -201,6 +215,7 @@ const main = defineCommand({
       }
     } else if (isInteractive) {
       const allPlatformIds = ["domain", ...PLATFORM_CHECKERS.map((c) => c.id)];
+      const savedPlatforms = config.get("platforms");
       const selected = guard(
         await p.multiselect({
           message: "Which platforms to check?",
@@ -212,9 +227,10 @@ const main = defineCommand({
               hint: c.category,
             })),
           ],
-          initialValues: allPlatformIds,
+          initialValues: savedPlatforms ?? allPlatformIds,
         })
       );
+      config.set("platforms", selected);
       if (selected.length < allPlatformIds.length) {
         checkerIds = selected;
       }
@@ -262,13 +278,15 @@ const main = defineCommand({
         ".studio",
         ".inc",
       ];
+      const savedTlds = config.get("tlds");
       const selected = guard(
         await p.multiselect({
           message: "Which TLDs to check?",
           options: POPULAR_TLDS.map((tld) => ({ value: tld, label: tld })),
-          initialValues: DEFAULT_TLDS,
+          initialValues: savedTlds ?? DEFAULT_TLDS,
         })
       );
+      config.set("tlds", selected);
       tlds = selected;
     }
 
@@ -295,19 +313,22 @@ const main = defineCommand({
         variants = generateVariants(name, patternIds);
       }
     } else if (isInteractive) {
+      const savedWantVariants = config.get("variants") ?? false;
       const wantVariants = guard(
         await p.confirm({
           message: "Check alternate versions too? (e.g. useName, nameHQ)",
-          initialValue: false,
+          initialValue: savedWantVariants,
         })
       );
+      config.set("variants", wantVariants);
 
       if (wantVariants) {
+        const allPatternIds = ALL_PATTERNS.map((pat) => pat.id);
+        const savedPatterns = config.get("variantPatterns");
         const selected = guard(
           await p.multiselect({
             message: "Which variant patterns?",
             options: [
-              { value: "all", label: "All patterns", hint: "try everything" },
               ...PREFIX_PATTERNS.map((pat) => ({
                 value: pat.id,
                 label: pat.label.replace("___", name),
@@ -319,10 +340,11 @@ const main = defineCommand({
                 hint: "suffix",
               })),
             ],
-            initialValues: ["all"],
+            initialValues: savedPatterns ?? allPatternIds,
           })
         );
-        const patternIds = selected.includes("all") ? undefined : selected;
+        config.set("variantPatterns", selected);
+        const patternIds = selected.length < allPatternIds.length ? selected : undefined;
         variants = generateVariants(name, patternIds);
       } else {
         variants = [{ name: cleanName(name), pattern: null }];
