@@ -1,5 +1,5 @@
 {
-  "name": "dibs-cli",
+  "name": "calldibs",
   "version": "0.0.0",
   "type": "module",
   "files": [
@@ -43,6 +43,9 @@
   },
   "license": "MIT",
   "description": "Call dibs on a name — check availability across domains, social media, package registries, and trademarks.",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@17secrets/usernames": "^0.0.4",
     "@clack/prompts": "^1.1.0",
