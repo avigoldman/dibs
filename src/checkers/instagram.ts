@@ -19,5 +19,10 @@ export async function checkInstagram(name: string): Promise<CheckResult> {
   if (res.available === false) {
     return { platform: "Instagram", status: "taken", url };
   }
-  return { platform: "Instagram", status: "error", url, message: res.message || "Could not determine" };
+  return {
+    platform: "Instagram",
+    status: "error",
+    url,
+    message: res.message || "Could not determine",
+  };
 }

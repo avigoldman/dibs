@@ -56,9 +56,7 @@ export function formatPretty(rec: Recommendation): string {
       const bar = renderBar(vr.score, 1, 16);
       const c = vr.score >= 0.7 ? pc.green : vr.score >= 0.4 ? pc.yellow : pc.red;
       const label = vr.variant.name.padEnd(24);
-      const tag = vr.variant.pattern
-        ? pc.dim(` ← ${vr.variant.pattern.label}`)
-        : pc.dim(" ← bare");
+      const tag = vr.variant.pattern ? pc.dim(` ← ${vr.variant.pattern.label}`) : pc.dim(" ← bare");
 
       lines.push(`  ${c(label)} ${bar} ${c(`${pct}%`.padStart(4))}${tag}`);
     }
@@ -97,9 +95,7 @@ export function formatPretty(rec: Recommendation): string {
   return lines.join("\n");
 }
 
-function groupResults(
-  vr: VariantResult
-): [string, VariantResult["results"]][] {
+function groupResults(vr: VariantResult): [string, VariantResult["results"]][] {
   const categories: Record<string, typeof vr.results> = {
     Domains: [],
     Social: [],
@@ -111,7 +107,9 @@ function groupResults(
     if (r.platform.startsWith("Domain ")) {
       categories["Domains"]!.push(r);
     } else if (
-      ["GitHub", "X / Twitter", "Instagram", "LinkedIn", "TikTok", "YouTube", "Reddit"].includes(r.platform)
+      ["GitHub", "X / Twitter", "Instagram", "LinkedIn", "TikTok", "YouTube", "Reddit"].includes(
+        r.platform
+      )
     ) {
       categories["Social"]!.push(r);
     } else if (r.platform.includes("Trademark")) {

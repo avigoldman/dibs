@@ -15,5 +15,10 @@ export async function checkYouTube(name: string): Promise<CheckResult> {
   if (res.available === false) {
     return { platform: "YouTube", status: "taken", url };
   }
-  return { platform: "YouTube", status: "error", url, message: res.message || "Could not determine" };
+  return {
+    platform: "YouTube",
+    status: "error",
+    url,
+    message: res.message || "Could not determine",
+  };
 }

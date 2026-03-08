@@ -59,7 +59,10 @@ describe("checkNpm", () => {
 describe("checkGitHub", () => {
   it("returns available when client says available", async () => {
     mockUsernamesClient.github.mockResolvedValue({
-      available: true, platform: "github", username: "test", message: "",
+      available: true,
+      platform: "github",
+      username: "test",
+      message: "",
     });
     const { checkGitHub } = await import("../src/checkers/github.js");
     const result = await checkGitHub("nonexistent-user-xyz");
@@ -69,7 +72,10 @@ describe("checkGitHub", () => {
 
   it("returns taken when client says not available", async () => {
     mockUsernamesClient.github.mockResolvedValue({
-      available: false, platform: "github", username: "test", message: "",
+      available: false,
+      platform: "github",
+      username: "test",
+      message: "",
     });
     const { checkGitHub } = await import("../src/checkers/github.js");
     const result = await checkGitHub("octocat");
@@ -78,7 +84,10 @@ describe("checkGitHub", () => {
 
   it("returns error when client returns null", async () => {
     mockUsernamesClient.github.mockResolvedValue({
-      available: null, platform: "github", username: "test", message: "timeout",
+      available: null,
+      platform: "github",
+      username: "test",
+      message: "timeout",
     });
     const { checkGitHub } = await import("../src/checkers/github.js");
     const result = await checkGitHub("test");
@@ -176,7 +185,10 @@ describe("checkTwitter", () => {
 describe("checkInstagram", () => {
   it("returns available when client says available", async () => {
     mockUsernamesClient.instagram.mockResolvedValue({
-      available: true, platform: "instagram", username: "test", message: "",
+      available: true,
+      platform: "instagram",
+      username: "test",
+      message: "",
     });
     const { checkInstagram } = await import("../src/checkers/instagram.js");
     const result = await checkInstagram("nxuserxyz");
@@ -185,7 +197,10 @@ describe("checkInstagram", () => {
 
   it("returns taken when client says not available", async () => {
     mockUsernamesClient.instagram.mockResolvedValue({
-      available: false, platform: "instagram", username: "test", message: "",
+      available: false,
+      platform: "instagram",
+      username: "test",
+      message: "",
     });
     const { checkInstagram } = await import("../src/checkers/instagram.js");
     const result = await checkInstagram("instagram");
@@ -204,7 +219,10 @@ describe("checkInstagram", () => {
 describe("checkTikTok", () => {
   it("returns available when client says available", async () => {
     mockUsernamesClient.tiktok.mockResolvedValue({
-      available: true, platform: "tiktok", username: "test", message: "",
+      available: true,
+      platform: "tiktok",
+      username: "test",
+      message: "",
     });
     const { checkTikTok } = await import("../src/checkers/tiktok.js");
     const result = await checkTikTok("nxuserxyz");
@@ -223,7 +241,10 @@ describe("checkTikTok", () => {
 describe("checkYouTube", () => {
   it("returns available when client says available", async () => {
     mockUsernamesClient.youtube.mockResolvedValue({
-      available: true, platform: "youtube", username: "test", message: "",
+      available: true,
+      platform: "youtube",
+      username: "test",
+      message: "",
     });
     const { checkYouTube } = await import("../src/checkers/youtube.js");
     const result = await checkYouTube("nxuserxyz");
@@ -232,7 +253,10 @@ describe("checkYouTube", () => {
 
   it("returns taken when client says not available", async () => {
     mockUsernamesClient.youtube.mockResolvedValue({
-      available: false, platform: "youtube", username: "test", message: "",
+      available: false,
+      platform: "youtube",
+      username: "test",
+      message: "",
     });
     const { checkYouTube } = await import("../src/checkers/youtube.js");
     const result = await checkYouTube("google");

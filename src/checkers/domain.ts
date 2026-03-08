@@ -42,10 +42,7 @@ function isDomainAvailable(whoisData: Record<string, unknown>): boolean {
   return false;
 }
 
-export async function checkDomain(
-  name: string,
-  tld: string
-): Promise<CheckResult> {
+export async function checkDomain(name: string, tld: string): Promise<CheckResult> {
   const t = tld.startsWith(".") ? tld : `.${tld}`;
   const clean = name.toLowerCase().replace(/[^a-z0-9-]/g, "");
   const domain = `${clean}${t}`;

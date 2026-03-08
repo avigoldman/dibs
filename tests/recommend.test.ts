@@ -14,16 +14,14 @@ describe("generateRecommendation", () => {
     const results = makeResults({
       "Domain acme.com": "available",
       "Domain acme.dev": "available",
-      "GitHub": "available",
+      GitHub: "available",
       "X / Twitter": "available",
-      "Instagram": "available",
-      "npm": "available",
+      Instagram: "available",
+      npm: "available",
       "USPTO Trademark": "available",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     expect(rec.verdict).toBe("great");
     expect(rec.best.variant.name).toBe("acme");
@@ -34,16 +32,14 @@ describe("generateRecommendation", () => {
     const results = makeResults({
       "Domain acme.com": "taken",
       "Domain acme.dev": "taken",
-      "GitHub": "taken",
+      GitHub: "taken",
       "X / Twitter": "taken",
-      "Instagram": "taken",
-      "npm": "taken",
+      Instagram: "taken",
+      npm: "taken",
       "USPTO Trademark": "taken",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     expect(rec.verdict).toBe("poor");
     expect(rec.best.score).toBe(0);
@@ -52,18 +48,21 @@ describe("generateRecommendation", () => {
   it("picks the best variant by weighted score", () => {
     const taken = makeResults({
       "Domain acme.com": "taken",
-      "GitHub": "taken",
-      "npm": "taken",
+      GitHub: "taken",
+      npm: "taken",
     });
     const available = makeResults({
       "Domain acmehq.com": "available",
-      "GitHub": "available",
-      "npm": "available",
+      GitHub: "available",
+      npm: "available",
     });
 
     const rec = generateRecommendation([
       { variant: { name: "acme", pattern: null }, results: taken },
-      { variant: { name: "acmehq", pattern: { id: "hq", label: "___hq", apply: (n) => `${n}hq` } }, results: available },
+      {
+        variant: { name: "acmehq", pattern: { id: "hq", label: "___hq", apply: (n) => `${n}hq` } },
+        results: available,
+      },
     ]);
 
     expect(rec.best.variant.name).toBe("acmehq");
@@ -73,8 +72,8 @@ describe("generateRecommendation", () => {
   it("does not penalize errors in the score", () => {
     const withErrors = makeResults({
       "Domain acme.com": "available",
-      "GitHub": "error",
-      "npm": "available",
+      GitHub: "error",
+      npm: "available",
     });
 
     const rec = generateRecommendation([
@@ -90,12 +89,10 @@ describe("generateRecommendation", () => {
   it("includes error warnings in details", () => {
     const results = makeResults({
       "Domain acme.com": "available",
-      "GitHub": "error",
+      GitHub: "error",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     const errorDetail = rec.details.find((d) => d.includes("failed"));
     expect(errorDetail).toBeDefined();
@@ -107,9 +104,7 @@ describe("generateRecommendation", () => {
       "Domain acme.com": "available",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     expect(rec.details.some((d) => d.includes(".com") && d.includes("✓"))).toBe(true);
   });
@@ -119,9 +114,7 @@ describe("generateRecommendation", () => {
       "Domain acme.com": "taken",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     expect(rec.details.some((d) => d.includes(".com") && d.includes("✗"))).toBe(true);
   });
@@ -130,16 +123,14 @@ describe("generateRecommendation", () => {
     const results = makeResults({
       "Domain acme.com": "taken",
       "Domain acme.dev": "available",
-      "GitHub": "available",
+      GitHub: "available",
       "X / Twitter": "taken",
-      "Instagram": "available",
-      "npm": "available",
+      Instagram: "available",
+      npm: "available",
       "USPTO Trademark": "available",
     });
 
-    const rec = generateRecommendation([
-      { variant: { name: "acme", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "acme", pattern: null }, results }]);
 
     expect(["good", "fair"]).toContain(rec.verdict);
     expect(rec.best.available).toBe(5);

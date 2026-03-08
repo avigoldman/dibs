@@ -5,7 +5,11 @@ export async function checkReddit(name: string): Promise<CheckResult> {
   const url = `https://www.reddit.com/r/${sub}`;
 
   if (sub.length < 3 || sub.length > 21) {
-    return { platform: "Reddit", status: "error", message: "Subreddit name must be 3–21 characters" };
+    return {
+      platform: "Reddit",
+      status: "error",
+      message: "Subreddit name must be 3–21 characters",
+    };
   }
 
   const res = await fetch(`${url}/about.json`, {

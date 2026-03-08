@@ -10,14 +10,10 @@ export async function checkGoPkg(name: string): Promise<CheckResult> {
     `https://pkg.go.dev/github.com/${slug}`,
   ];
 
-  const results = await Promise.all(
-    urls.map((u) => fetch(u, { redirect: "manual" }))
-  );
+  const results = await Promise.all(urls.map((u) => fetch(u, { redirect: "manual" })));
 
   // 404 = not found, 400 = bad module path (also means not found)
-  const allMissing = results.every(
-    (r: Response) => r.status === 404 || r.status === 400
-  );
+  const allMissing = results.every((r: Response) => r.status === 404 || r.status === 400);
 
   if (allMissing) {
     return { platform: "Go (pkg.go.dev)", status: "available", url: searchUrl };

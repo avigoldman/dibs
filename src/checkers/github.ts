@@ -13,5 +13,10 @@ export async function checkGitHub(name: string): Promise<CheckResult> {
   if (res.available === false) {
     return { platform: "GitHub", status: "taken", url };
   }
-  return { platform: "GitHub", status: "error", url, message: res.message || "Could not determine" };
+  return {
+    platform: "GitHub",
+    status: "error",
+    url,
+    message: res.message || "Could not determine",
+  };
 }

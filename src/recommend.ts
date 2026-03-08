@@ -37,21 +37,21 @@ const PLATFORM_WEIGHTS: Record<string, number> = {
   "Domain .app": 4,
 
   // Social
-  "GitHub": 6,
+  GitHub: 6,
   "X / Twitter": 8,
-  "Instagram": 7,
-  "LinkedIn": 7,
-  "TikTok": 5,
-  "YouTube": 5,
-  "Reddit": 4,
+  Instagram: 7,
+  LinkedIn: 7,
+  TikTok: 5,
+  YouTube: 5,
+  Reddit: 4,
 
   // Packages
-  "npm": 3,
-  "PyPI": 2,
+  npm: 3,
+  PyPI: 2,
   "crates.io": 2,
-  "RubyGems": 2,
+  RubyGems: 2,
   "Go (pkg.go.dev)": 2,
-  "Homebrew": 2,
+  Homebrew: 2,
   "Docker Hub": 2,
 
   // Legal
@@ -121,7 +121,9 @@ function buildDetails(vr: VariantResult): string[] {
     } else if (socialAvailable >= socialTotal * 0.7) {
       details.push(`◐ ${socialAvailable}/${socialTotal} social handles available — mostly clear`);
     } else {
-      details.push(`✗ Only ${socialAvailable}/${socialTotal} social handles available — branding will be inconsistent`);
+      details.push(
+        `✗ Only ${socialAvailable}/${socialTotal} social handles available — branding will be inconsistent`
+      );
     }
   }
 
@@ -154,7 +156,9 @@ function buildDetails(vr: VariantResult): string[] {
   // Errors
   const errors = results.filter((r) => r.status === "error");
   if (errors.length > 0) {
-    details.push(`⚠ ${errors.length} check(s) failed — results may be incomplete: ${errors.map((e) => e.platform).join(", ")}`);
+    details.push(
+      `⚠ ${errors.length} check(s) failed — results may be incomplete: ${errors.map((e) => e.platform).join(", ")}`
+    );
   }
 
   return details;

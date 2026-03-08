@@ -6,11 +6,9 @@ import pc from "picocolors";
 import {
   ALL_CHECKER_IDS,
   DEFAULT_TLDS,
-  getAllTlds,
   isValidTld,
   PLATFORM_CHECKERS,
   runCheckers,
-  type CheckResult,
   type RunOptions,
 } from "./checkers/index.js";
 import {
@@ -22,7 +20,13 @@ import {
   type Variant,
 } from "./variants.js";
 import { generateRecommendation } from "./recommend.js";
-import { formatJSON, formatCSV, formatPretty, OUTPUT_FORMATS, type OutputFormat } from "./formatters/index.js";
+import {
+  formatJSON,
+  formatCSV,
+  formatPretty,
+  OUTPUT_FORMATS,
+  type OutputFormat,
+} from "./formatters/index.js";
 
 function cancelAndExit(): never {
   p.cancel("Cancelled.");
@@ -160,7 +164,9 @@ const main = defineCommand({
     let name = args.name;
     if (!name) {
       if (!isInteractive) {
-        console.error("Error: name is required in non-interactive mode. Pass it as a positional argument.");
+        console.error(
+          "Error: name is required in non-interactive mode. Pass it as a positional argument."
+        );
         process.exit(1);
       }
       name = guard(
@@ -182,7 +188,10 @@ const main = defineCommand({
       const invalid = checkerIds.filter((id) => !valid.has(id));
       if (invalid.length) {
         const msg = `Unknown platform(s): ${invalid.join(", ")}. Available: ${ALL_CHECKER_IDS.join(", ")}`;
-        if (isMachine) { console.error(msg); process.exit(1); }
+        if (isMachine) {
+          console.error(msg);
+          process.exit(1);
+        }
         p.log.error(msg);
         process.exit(1);
       }
@@ -219,22 +228,45 @@ const main = defineCommand({
       const invalid = tlds.filter((t) => !isValidTld(t));
       if (invalid.length) {
         const msg = `Unknown TLD(s): ${invalid.join(", ")}. Use any valid IANA TLD (e.g. com, dev, io, ai, co, app, org, net, xyz, ...)`;
-        if (isMachine) { console.error(msg); process.exit(1); }
+        if (isMachine) {
+          console.error(msg);
+          process.exit(1);
+        }
         p.log.error(msg);
         process.exit(1);
       }
     } else if (isInteractive && wantsDomains) {
       const POPULAR_TLDS = [
-        ".com", ".dev", ".io", ".ai", ".co", ".app",
-        ".org", ".net", ".sh", ".so", ".run", ".to",
-        ".me", ".cc", ".xyz", ".tech", ".tools",
-        ".design", ".studio", ".inc",
+        ".com",
+        ".dev",
+        ".io",
+        ".ai",
+        ".co",
+        ".app",
+        ".org",
+        ".net",
+        ".sh",
+        ".so",
+        ".run",
+        ".to",
+        ".me",
+        ".cc",
+        ".xyz",
+        ".tech",
+        ".tools",
+        ".design",
+        ".studio",
+        ".inc",
       ];
       const selected = guard(
         await p.multiselect({
           message: "Which TLDs to check?",
           options: [
-            { value: "default", label: `Defaults (${DEFAULT_TLDS.join(", ")})`, hint: "recommended" },
+            {
+              value: "default",
+              label: `Defaults (${DEFAULT_TLDS.join(", ")})`,
+              hint: "recommended",
+            },
             ...POPULAR_TLDS.map((tld) => ({ value: tld, label: tld })),
           ],
           initialValues: ["default"],
@@ -258,7 +290,10 @@ const main = defineCommand({
         const invalid = patternIds.filter((id) => !valid.has(id));
         if (invalid.length) {
           const msg = `Unknown variant(s): ${invalid.join(", ")}. Available: all, ${ALL_PATTERNS.map((p) => p.id).join(", ")}`;
-          if (isMachine) { console.error(msg); process.exit(1); }
+          if (isMachine) {
+            console.error(msg);
+            process.exit(1);
+          }
           p.log.error(msg);
           process.exit(1);
         }
@@ -339,9 +374,7 @@ const main = defineCommand({
       case "pretty":
         console.log(formatPretty(rec));
         p.outro(
-          (VERDICT_COLORS[rec.verdict] ?? pc.white)(
-            `${rec.best.variant.name} — ${rec.summary}`
-          )
+          (VERDICT_COLORS[rec.verdict] ?? pc.white)(`${rec.best.variant.name} — ${rec.summary}`)
         );
         break;
     }

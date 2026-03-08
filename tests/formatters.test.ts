@@ -85,9 +85,7 @@ describe("formatCSV", () => {
     const results: CheckResult[] = [
       { platform: "test", status: "error", message: "failed, retry later" },
     ];
-    const rec = generateRecommendation([
-      { variant: { name: "test", pattern: null }, results },
-    ]);
+    const rec = generateRecommendation([{ variant: { name: "test", pattern: null }, results }]);
     const output = formatCSV(rec);
     expect(output).toContain('"failed, retry later"');
   });

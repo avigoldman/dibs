@@ -19,5 +19,10 @@ export async function checkTikTok(name: string): Promise<CheckResult> {
   if (res.available === false) {
     return { platform: "TikTok", status: "taken", url };
   }
-  return { platform: "TikTok", status: "error", url, message: res.message || "Could not determine" };
+  return {
+    platform: "TikTok",
+    status: "error",
+    url,
+    message: res.message || "Could not determine",
+  };
 }

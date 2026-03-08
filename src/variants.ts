@@ -47,10 +47,7 @@ export function cleanName(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9-]/g, "");
 }
 
-export function generateVariants(
-  baseName: string,
-  patternIds?: string[]
-): Variant[] {
+export function generateVariants(baseName: string, patternIds?: string[]): Variant[] {
   const clean = cleanName(baseName);
 
   // Always include the bare name first

@@ -50,12 +50,12 @@ dibs acme -f csv > report.csv
 
 ## What It Checks
 
-| Category | Platforms | Flag IDs |
-|---|---|---|
-| **Domains** | WHOIS lookup for any TLD | `domain` |
-| **Social** | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit` |
-| **Packages** | npm, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub` |
-| **Legal** | USPTO Trademark | `trademark` |
+| Category     | Platforms                                                             | Flag IDs                                                                    |
+| ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Domains**  | WHOIS lookup for any TLD                                              | `domain`                                                                    |
+| **Social**   | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit       | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit` |
+| **Packages** | npm, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub`          |
+| **Legal**    | USPTO Trademark                                                       | `trademark`                                                                 |
 
 ### Default TLDs
 
@@ -85,32 +85,32 @@ With `-v all`, checking `acme` also checks `useacme`, `getacme`, `acmehq`, `acme
 
 Each check result is one of three statuses:
 
-| Status | Meaning |
-|---|---|
-| `available` | The name is not taken on that platform |
-| `taken` | The name is already registered/in use |
-| `error` | The check failed (rate limit, timeout, etc.) — does not penalize the score |
+| Status      | Meaning                                                                    |
+| ----------- | -------------------------------------------------------------------------- |
+| `available` | The name is not taken on that platform                                     |
+| `taken`     | The name is already registered/in use                                      |
+| `error`     | The check failed (rate limit, timeout, etc.) — does not penalize the score |
 
 Platforms are weighted by importance to a business:
 
-| Weight | Platforms |
-|---|---|
-| **15×** | `.com` domain |
-| **12×** | USPTO Trademark |
-| **8×** | X / Twitter |
-| **7×** | Instagram, LinkedIn |
-| **6×** | GitHub, `.ai` domain |
-| **5×** | TikTok, YouTube, `.com`-adjacent domains |
-| **4×** | Reddit, `.co`, `.app` domains |
+| Weight   | Platforms                                       |
+| -------- | ----------------------------------------------- |
+| **15×**  | `.com` domain                                   |
+| **12×**  | USPTO Trademark                                 |
+| **8×**   | X / Twitter                                     |
+| **7×**   | Instagram, LinkedIn                             |
+| **6×**   | GitHub, `.ai` domain                            |
+| **5×**   | TikTok, YouTube, `.com`-adjacent domains        |
+| **4×**   | Reddit, `.co`, `.app` domains                   |
 | **2-3×** | Package registries (npm, PyPI, crates.io, etc.) |
 
 The weighted score produces a verdict:
 
-| Score | Verdict |
-|---|---|
-| ≥ 80% | 🎉 **Great** — widely available, grab it now |
-| ≥ 60% | 👍 **Good** — solid choice with minor conflicts |
-| ≥ 35% | 🤔 **Fair** — notable gaps, consider a variant |
+| Score | Verdict                                           |
+| ----- | ------------------------------------------------- |
+| ≥ 80% | 🎉 **Great** — widely available, grab it now      |
+| ≥ 60% | 👍 **Good** — solid choice with minor conflicts   |
+| ≥ 35% | 🤔 **Fair** — notable gaps, consider a variant    |
 | < 35% | 👎 **Poor** — largely taken, try a different name |
 
 ## Output Formats
@@ -152,13 +152,36 @@ dibs acme -f json
     "errors": 0,
     "total": 22,
     "results": [
-      { "platform": "Domain acme.com", "status": "taken", "url": "https://acme.com", "message": null },
-      { "platform": "GitHub", "status": "taken", "url": "https://github.com/acme", "message": null },
-      { "platform": "npm", "status": "available", "url": "https://www.npmjs.com/package/acme", "message": null }
+      {
+        "platform": "Domain acme.com",
+        "status": "taken",
+        "url": "https://acme.com",
+        "message": null
+      },
+      {
+        "platform": "GitHub",
+        "status": "taken",
+        "url": "https://github.com/acme",
+        "message": null
+      },
+      {
+        "platform": "npm",
+        "status": "available",
+        "url": "https://www.npmjs.com/package/acme",
+        "message": null
+      }
     ]
   },
   "variants": [
-    { "name": "acme", "pattern": "bare", "score": 28, "available": 10, "taken": 12, "errors": 0, "total": 22 }
+    {
+      "name": "acme",
+      "pattern": "bare",
+      "score": 28,
+      "available": 10,
+      "taken": 12,
+      "errors": 0,
+      "total": 22
+    }
   ]
 }
 ```
@@ -195,14 +218,14 @@ acme,bare,npm,available,https://www.npmjs.com/package/acme,
 dibs [OPTIONS] [NAME]
 ```
 
-| Flag | Short | Description |
-|---|---|---|
-| `NAME` | | The name to check (omit for interactive mode) |
-| `--only` | `-o` | Platforms to check (comma-separated) |
-| `--tlds` | `-t` | TLDs to check (comma-separated, e.g. `com,ai,dev`) |
-| `--variants` | `-v` | Enable variants: `all` for every pattern, or comma-separated list (e.g. `hq,use,app`) |
-| `--format` | `-f` | Output format: `pretty`, `json`, or `csv` (default: `pretty`) |
-| `--help` | `-h` | Show help with full documentation |
+| Flag         | Short | Description                                                                           |
+| ------------ | ----- | ------------------------------------------------------------------------------------- |
+| `NAME`       |       | The name to check (omit for interactive mode)                                         |
+| `--only`     | `-o`  | Platforms to check (comma-separated)                                                  |
+| `--tlds`     | `-t`  | TLDs to check (comma-separated, e.g. `com,ai,dev`)                                    |
+| `--variants` | `-v`  | Enable variants: `all` for every pattern, or comma-separated list (e.g. `hq,use,app`) |
+| `--format`   | `-f`  | Output format: `pretty`, `json`, or `csv` (default: `pretty`)                         |
+| `--help`     | `-h`  | Show help with full documentation                                                     |
 
 ### Interactive Mode
 

@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from "vitest";
-import type { CheckResult } from "../src/checkers/types.js";
 
 // Mock everything to throw so we can test the safe wrapper
 const mockFetch = vi.fn().mockRejectedValue(new Error("Network failure"));

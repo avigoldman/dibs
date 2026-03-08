@@ -48,8 +48,18 @@ function safe(
 export const PLATFORM_CHECKERS: CheckerDef[] = [
   // Social
   { id: "github", label: "GitHub", category: "social", run: safe("GitHub", checkGitHub) },
-  { id: "twitter", label: "X / Twitter", category: "social", run: safe("X / Twitter", checkTwitter) },
-  { id: "instagram", label: "Instagram", category: "social", run: safe("Instagram", checkInstagram) },
+  {
+    id: "twitter",
+    label: "X / Twitter",
+    category: "social",
+    run: safe("X / Twitter", checkTwitter),
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    category: "social",
+    run: safe("Instagram", checkInstagram),
+  },
   { id: "linkedin", label: "LinkedIn", category: "social", run: safe("LinkedIn", checkLinkedIn) },
   { id: "tiktok", label: "TikTok", category: "social", run: safe("TikTok", checkTikTok) },
   { id: "youtube", label: "YouTube", category: "social", run: safe("YouTube", checkYouTube) },
@@ -60,12 +70,27 @@ export const PLATFORM_CHECKERS: CheckerDef[] = [
   { id: "pypi", label: "PyPI", category: "package", run: safe("PyPI", checkPyPI) },
   { id: "crates", label: "crates.io", category: "package", run: safe("crates.io", checkCratesIO) },
   { id: "rubygems", label: "RubyGems", category: "package", run: safe("RubyGems", checkRubyGems) },
-  { id: "go", label: "Go (pkg.go.dev)", category: "package", run: safe("Go (pkg.go.dev)", checkGoPkg) },
+  {
+    id: "go",
+    label: "Go (pkg.go.dev)",
+    category: "package",
+    run: safe("Go (pkg.go.dev)", checkGoPkg),
+  },
   { id: "homebrew", label: "Homebrew", category: "package", run: safe("Homebrew", checkHomebrew) },
-  { id: "dockerhub", label: "Docker Hub", category: "package", run: safe("Docker Hub", checkDockerHub) },
+  {
+    id: "dockerhub",
+    label: "Docker Hub",
+    category: "package",
+    run: safe("Docker Hub", checkDockerHub),
+  },
 
   // Legal
-  { id: "trademark", label: "USPTO Trademark", category: "legal", run: safe("USPTO Trademark", checkUSPTOTrademark) },
+  {
+    id: "trademark",
+    label: "USPTO Trademark",
+    category: "legal",
+    run: safe("USPTO Trademark", checkUSPTOTrademark),
+  },
 ];
 
 export const ALL_CHECKER_IDS = ["domain", ...PLATFORM_CHECKERS.map((c) => c.id)];
@@ -75,10 +100,7 @@ export interface RunOptions {
   tlds?: string[];
 }
 
-export async function runCheckers(
-  name: string,
-  opts: RunOptions = {}
-): Promise<CheckResult[]> {
+export async function runCheckers(name: string, opts: RunOptions = {}): Promise<CheckResult[]> {
   const { checkerIds, tlds } = opts;
   const promises: Promise<CheckResult | CheckResult[]>[] = [];
 
