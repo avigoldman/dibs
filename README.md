@@ -6,7 +6,7 @@ Call dibs on a name — check availability across domains, social media, package
 dibs acme
 ```
 
-dibs checks your name across 17+ platforms simultaneously and tells you what's available and what's taken. Optionally generate variants like `useacme`, `acmehq`, `acmedev` to find the best available version.
+dibs checks your name across 18+ platforms simultaneously and tells you what's available and what's taken. Optionally generate variants like `useacme`, `acmehq`, `acmedev` to find the best available version.
 
 ## Install
 
@@ -23,11 +23,14 @@ npx calldibs acme
 ## Quick Start
 
 ```sh
-# Interactive mode — prompts for everything
-dibs
-
 # Check a name on all platforms
 dibs acme
+
+# Pass a domain — extracts the name and ensures that TLD is checked
+dibs notion.so
+
+# Interactive mode — prompts for everything
+dibs
 
 # Also check variants (useacme, acmehq, etc.)
 dibs acme -v all
@@ -48,14 +51,28 @@ dibs acme -f json
 dibs acme -f csv > report.csv
 ```
 
+## Domain Input
+
+Pass a full domain and dibs will do the right thing:
+
+```sh
+dibs notion.so
+```
+
+- Extracts the name (`notion`) and TLD (`.so`)
+- Formats the name per platform: `notionso` for social handles, `notion-so` for package registries
+- Ensures `.so` is always in the TLD check list
+- Skips variant generation (you're checking a specific brand)
+- `.com` is treated as a plain name — `example.com` just checks `example`
+
 ## What It Checks
 
-| Category     | Platforms                                                                      | Flag IDs                                                                      |
-| ------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| **Domains**  | WHOIS lookup for any TLD                                                       | `domain`                                                                      |
-| **Social**   | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit                | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit`   |
-| **Packages** | npm, npm org, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `npm-org`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub` |
-| **Legal**    | USPTO Trademark                                                                | `trademark`                                                                   |
+| Category     | Platforms                                                                      | Flag IDs                                                                             |
+| ------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| **Domains**  | WHOIS lookup for any TLD                                                       | `domain`                                                                             |
+| **Social**   | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit, Ghost         | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit`, `ghost` |
+| **Packages** | npm, npm org, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `npm-org`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub`        |
+| **Legal**    | USPTO Trademark                                                                | `trademark`                                                                          |
 
 ### Default TLDs
 
@@ -65,7 +82,7 @@ Any valid IANA TLD is supported (1,400+). Just pass whatever you need via `--tld
 
 ## Variants
 
-By default, only the exact name is checked. Use `--variants` / `-v` to also check common alternatives and find the best available version for your brand.
+By default, only the exact name is checked. Use `--variants` / `-v` to also check common alternatives and find the best available version for your brand. Variants are disabled when passing a domain as input.
 
 **Prefixes:** `use___`, `get___`, `try___`, `go___`, `hey___`, `my___`, `the___`, `with___`, `on___`, `by___`
 
@@ -103,6 +120,7 @@ Platforms are weighted by importance to a business:
 | **5×**   | TikTok, YouTube, `.com`-adjacent domains                 |
 | **4×**   | Reddit, `.co`, `.app` domains                            |
 | **2-3×** | Package registries (npm, npm org, PyPI, crates.io, etc.) |
+| **2×**   | Ghost                                                    |
 
 The weighted score produces a verdict:
 
@@ -138,7 +156,7 @@ dibs acme -f json
     "summary": "\"acme\" is largely taken. Try a different name or variant.",
     "details": [
       "✗ .com domain is taken — consider a variant or alternative TLD",
-      "✗ Only 2/7 social handles available — branding will be inconsistent",
+      "✗ Only 2/8 social handles available — branding will be inconsistent",
       "◐ 5/8 package registries available",
       "⚠ Possible USPTO trademark conflict — consult a lawyer before proceeding"
     ]
@@ -148,9 +166,9 @@ dibs acme -f json
     "pattern": "bare",
     "score": 28,
     "available": 10,
-    "taken": 13,
+    "taken": 14,
     "errors": 0,
-    "total": 23,
+    "total": 24,
     "results": [
       {
         "platform": "Domain acme.com",
@@ -178,9 +196,9 @@ dibs acme -f json
       "pattern": "bare",
       "score": 28,
       "available": 10,
-      "taken": 13,
+      "taken": 14,
       "errors": 0,
-      "total": 23
+      "total": 24
     }
   ]
 }
@@ -220,12 +238,13 @@ dibs [OPTIONS] [NAME]
 
 | Flag         | Short | Description                                                                           |
 | ------------ | ----- | ------------------------------------------------------------------------------------- |
-| `NAME`       |       | The name to check (omit for interactive mode)                                         |
+| `NAME`       |       | The name or domain to check (omit for interactive mode)                               |
 | `--only`     | `-o`  | Platforms to check (comma-separated)                                                  |
 | `--tlds`     | `-t`  | TLDs to check (comma-separated, e.g. `com,ai,dev`)                                    |
 | `--variants` | `-v`  | Enable variants: `all` for every pattern, or comma-separated list (e.g. `hq,use,app`) |
 | `--format`   | `-f`  | Output format: `pretty`, `json`, or `csv` (default: `pretty`)                         |
 | `--help`     | `-h`  | Show help with full documentation                                                     |
+| `--version`  |       | Show version number                                                                   |
 
 ### Interactive Mode
 
@@ -235,6 +254,8 @@ Run `dibs` with no arguments to enter interactive mode. You'll be prompted to:
 2. Select which platforms to check
 3. Select which TLDs to check
 4. Choose whether to generate variants and which patterns to use
+
+Your selections are saved between sessions — next time you run `dibs`, your previous choices are pre-selected.
 
 ### Non-Interactive Mode
 
@@ -252,6 +273,9 @@ dibs myproject -v all -f json
 
 # Narrow check — just domains
 dibs myproject -o domain -t com,dev,ai,app -f json
+
+# Check a specific domain
+dibs open.ai -f json
 ```
 
 ## Error Handling
@@ -262,11 +286,12 @@ The CLI always exits with code 0 when given valid arguments, regardless of check
 
 ## How It Works
 
-1. **Name cleaning** — the input is lowercased and stripped to `[a-z0-9-]`
-2. **Variant generation** — prefixes and suffixes are applied to create alternatives (when `-v` is used)
-3. **Parallel checking** — all variants × all platforms are checked concurrently
-4. **Scoring** — each variant gets a weighted score based on platform importance
-5. **Recommendation** — variants are ranked by score, the best is highlighted with a verdict
+1. **Input parsing** — if the input is a domain (e.g. `notion.so`), extracts the name and TLD, formats per platform
+2. **Name cleaning** — the input is lowercased and stripped to `[a-z0-9-]`
+3. **Variant generation** — prefixes and suffixes are applied to create alternatives (when `-v` is used, disabled for domain inputs)
+4. **Parallel checking** — all variants × all platforms are checked concurrently
+5. **Scoring** — each variant gets a weighted score based on platform importance
+6. **Recommendation** — variants are ranked by score, the best is highlighted with a verdict
 
 ## Development
 
@@ -281,10 +306,10 @@ npm run dev
 # Type check
 npx tsc --noEmit
 
-# Unit tests (79 tests, mocked, fast)
+# Unit tests (114 tests, mocked, fast)
 npm test
 
-# Integration tests (34 tests, real network calls)
+# Integration tests (real network calls)
 npm run test:integration
 
 # Build
