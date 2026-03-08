@@ -36,7 +36,6 @@
     "brand"
   ],
   "author": "Avi Goldman <me@avigoldman.com> (https://avigoldman.com)",
-  "homepage": "https://dibs.avigoldman.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/avigoldman/dibs.git"
