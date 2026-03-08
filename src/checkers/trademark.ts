@@ -1,27 +1,15 @@
 import type { CheckResult } from "./types";
 
 export async function checkUSPTOTrademark(name: string): Promise<CheckResult> {
-  const searchUrl = `https://tmsearch.uspto.gov/bin/gate.exe?f=searchss&state=4808:1.1.1&p_s_PARA1=${encodeURIComponent(name)}`;
+  const searchUrl = `https://www.trademarkia.com/search/trademarks?query=${encodeURIComponent(name)}&country=us`;
 
-  // Use the USPTO TSDR API to check for exact matches
-  const res = await fetch(
-    `https://tsdr.uspto.gov/caseinfo?query=${encodeURIComponent(name)}&type=default`,
-    { redirect: "manual" }
-  );
-
-  if (res.status === 404 || res.status === 204) {
-    return {
-      platform: "USPTO Trademark",
-      status: "available",
-      url: searchUrl,
-      message: "No exact match — do a manual search to be sure",
-    };
-  }
-
+  // USPTO and Trademarkia APIs are behind bot protection (WAF/Cloudflare).
+  // We can't reliably check programmatically, so we provide the link
+  // and mark as unknown for the user to verify manually.
   return {
     platform: "USPTO Trademark",
-    status: "taken",
+    status: "error",
     url: searchUrl,
-    message: "Possible match — check manually",
+    message: "Automated check unavailable — verify manually at the link above",
   };
 }

@@ -428,25 +428,12 @@ describe("checkDockerHub", () => {
 // ── USPTO Trademark ──────────────────────────────────────────
 
 describe("checkUSPTOTrademark", () => {
-  it("returns available on 404", async () => {
-    mockFetch.mockResolvedValue({ status: 404 });
+  it("returns error with manual verification link", async () => {
     const { checkUSPTOTrademark } = await import("../src/checkers/trademark");
-    const result = await checkUSPTOTrademark("zizzblorp");
-    expect(result.status).toBe("available");
-    expect(result.message).toContain("manual");
-  });
-
-  it("returns available on 204", async () => {
-    mockFetch.mockResolvedValue({ status: 204 });
-    const { checkUSPTOTrademark } = await import("../src/checkers/trademark");
-    const result = await checkUSPTOTrademark("zizzblorp");
-    expect(result.status).toBe("available");
-  });
-
-  it("returns taken on 200", async () => {
-    mockFetch.mockResolvedValue({ status: 200 });
-    const { checkUSPTOTrademark } = await import("../src/checkers/trademark");
-    const result = await checkUSPTOTrademark("apple");
-    expect(result.status).toBe("taken");
+    const result = await checkUSPTOTrademark("mcdonalds");
+    expect(result.status).toBe("error");
+    expect(result.url).toContain("trademarkia.com");
+    expect(result.url).toContain("mcdonalds");
+    expect(result.message).toContain("manually");
   });
 });
