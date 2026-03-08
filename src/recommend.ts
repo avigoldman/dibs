@@ -1,5 +1,5 @@
-import type { CheckResult } from "./checkers/types.js";
-import type { Variant } from "./variants.js";
+import type { CheckResult } from "./checkers/types";
+import type { Variant } from "./variants";
 
 export interface VariantResult {
   variant: Variant;

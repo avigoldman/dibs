@@ -1,4 +1,4 @@
-import type { Recommendation } from "../recommend.js";
+import type { Recommendation } from "../recommend";
 
 export function formatJSON(rec: Recommendation): string {
   const output = {

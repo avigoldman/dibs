@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { formatJSON } from "../src/formatters/json.js";
-import { formatCSV } from "../src/formatters/csv.js";
-import { formatPretty } from "../src/formatters/pretty.js";
-import { generateRecommendation } from "../src/recommend.js";
-import type { CheckResult } from "../src/checkers/types.js";
+import { formatJSON } from "../src/formatters/json";
+import { formatCSV } from "../src/formatters/csv";
+import { formatPretty } from "../src/formatters/pretty";
+import { generateRecommendation } from "../src/recommend";
+import type { CheckResult } from "../src/checkers/types";
 
 function makeRec() {
   const results: CheckResult[] = [

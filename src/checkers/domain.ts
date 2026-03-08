@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 import { whoisDomain, firstResult } from "whoiser";
 import { TLDs } from "global-tld-list";
 

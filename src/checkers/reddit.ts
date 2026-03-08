@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkReddit(name: string): Promise<CheckResult> {
   const sub = name.replace(/[^a-zA-Z0-9_]/g, "");

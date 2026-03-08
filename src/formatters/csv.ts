@@ -1,4 +1,4 @@
-import type { Recommendation } from "../recommend.js";
+import type { Recommendation } from "../recommend";
 
 function escapeCSV(value: string): string {
   if (value.includes(",") || value.includes('"') || value.includes("\n")) {

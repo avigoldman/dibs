@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkCratesIO(name: string): Promise<CheckResult> {
   const url = `https://crates.io/api/v1/crates/${encodeURIComponent(name)}`;

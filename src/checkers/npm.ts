@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 import npmName from "npm-name";
 
 export async function checkNpm(name: string): Promise<CheckResult> {

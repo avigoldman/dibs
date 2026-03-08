@@ -1,5 +1,5 @@
 import pc from "picocolors";
-import type { Recommendation, VariantResult } from "../recommend.js";
+import type { Recommendation, VariantResult } from "../recommend";
 
 const VERDICT_COLORS: Record<string, (s: string) => string> = {
   great: pc.green,

@@ -27,7 +27,7 @@ vi.mock("npm-name", () => ({
 
 describe("safe wrapper / error handling", () => {
   it("returns error results instead of throwing when all checkers fail", async () => {
-    const { runCheckers } = await import("../src/checkers/index.js");
+    const { runCheckers } = await import("../src/checkers/index");
     const results = await runCheckers("test", {
       checkerIds: ["github", "npm", "domain"],
       tlds: [".com"],
@@ -43,7 +43,7 @@ describe("safe wrapper / error handling", () => {
   });
 
   it("wraps domain checker errors gracefully", async () => {
-    const { runCheckers } = await import("../src/checkers/index.js");
+    const { runCheckers } = await import("../src/checkers/index");
     const results = await runCheckers("test", {
       checkerIds: ["domain"],
       tlds: [".com", ".dev"],
@@ -56,7 +56,7 @@ describe("safe wrapper / error handling", () => {
   });
 
   it("wraps social checker errors gracefully", async () => {
-    const { runCheckers } = await import("../src/checkers/index.js");
+    const { runCheckers } = await import("../src/checkers/index");
     const results = await runCheckers("test", {
       checkerIds: ["github", "instagram", "tiktok", "youtube"],
     });
@@ -68,7 +68,7 @@ describe("safe wrapper / error handling", () => {
   });
 
   it("wraps fetch-based checker errors gracefully", async () => {
-    const { runCheckers } = await import("../src/checkers/index.js");
+    const { runCheckers } = await import("../src/checkers/index");
     const results = await runCheckers("test", {
       checkerIds: ["twitter", "linkedin", "reddit", "npm", "pypi", "rubygems", "homebrew"],
     });
@@ -79,7 +79,7 @@ describe("safe wrapper / error handling", () => {
   });
 
   it("includes the error message in the result", async () => {
-    const { runCheckers } = await import("../src/checkers/index.js");
+    const { runCheckers } = await import("../src/checkers/index");
     const results = await runCheckers("test", { checkerIds: ["npm"] });
 
     expect(results[0]!.message).toContain("Network failure");

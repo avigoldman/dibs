@@ -5,7 +5,7 @@ import {
   ALL_PATTERNS,
   PREFIX_PATTERNS,
   SUFFIX_PATTERNS,
-} from "../src/variants.js";
+} from "../src/variants";
 
 describe("cleanName", () => {
   it("lowercases and strips invalid chars", () => {

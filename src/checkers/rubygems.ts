@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkRubyGems(name: string): Promise<CheckResult> {
   const url = `https://rubygems.org/api/v1/gems/${encodeURIComponent(name)}.json`;

@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkTwitter(name: string): Promise<CheckResult> {
   const handle = name.replace(/[^a-zA-Z0-9_]/g, "");

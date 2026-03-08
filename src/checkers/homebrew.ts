@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkHomebrew(name: string): Promise<CheckResult> {
   const url = `https://formulae.brew.sh/api/formula/${encodeURIComponent(name)}.json`;

@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 import { Client } from "@17secrets/usernames";
 
 const client = new Client();

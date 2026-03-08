@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkPyPI(name: string): Promise<CheckResult> {
   const url = `https://pypi.org/pypi/${encodeURIComponent(name)}/json`;

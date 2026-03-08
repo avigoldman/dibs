@@ -10,7 +10,7 @@ import {
   PLATFORM_CHECKERS,
   runCheckers,
   type RunOptions,
-} from "./checkers/index.js";
+} from "./checkers/index";
 import {
   ALL_PATTERNS,
   PREFIX_PATTERNS,
@@ -18,15 +18,15 @@ import {
   cleanName,
   generateVariants,
   type Variant,
-} from "./variants.js";
-import { generateRecommendation } from "./recommend.js";
+} from "./variants";
+import { generateRecommendation } from "./recommend";
 import {
   formatJSON,
   formatCSV,
   formatPretty,
   OUTPUT_FORMATS,
   type OutputFormat,
-} from "./formatters/index.js";
+} from "./formatters/index";
 
 function cancelAndExit(): never {
   p.cancel("Cancelled.");

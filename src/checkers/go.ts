@@ -1,4 +1,4 @@
-import type { CheckResult } from "./types.js";
+import type { CheckResult } from "./types";
 
 export async function checkGoPkg(name: string): Promise<CheckResult> {
   const slug = name.toLowerCase().replace(/[^a-z0-9-]/g, "");

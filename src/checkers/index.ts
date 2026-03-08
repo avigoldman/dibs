@@ -1,23 +1,23 @@
-export type { CheckResult, CheckStatus } from "./types.js";
-export { DEFAULT_TLDS, getAllTlds, isValidTld } from "./domain.js";
+export type { CheckResult, CheckStatus } from "./types";
+export { DEFAULT_TLDS, getAllTlds, isValidTld } from "./domain";
 
-import type { CheckResult } from "./types.js";
-import { checkNpm } from "./npm.js";
-import { checkGitHub } from "./github.js";
-import { checkDomains, DEFAULT_TLDS } from "./domain.js";
-import { checkTwitter } from "./twitter.js";
-import { checkInstagram } from "./instagram.js";
-import { checkUSPTOTrademark } from "./trademark.js";
-import { checkPyPI } from "./pypi.js";
-import { checkCratesIO } from "./crates.js";
-import { checkHomebrew } from "./homebrew.js";
-import { checkLinkedIn } from "./linkedin.js";
-import { checkTikTok } from "./tiktok.js";
-import { checkYouTube } from "./youtube.js";
-import { checkReddit } from "./reddit.js";
-import { checkDockerHub } from "./dockerhub.js";
-import { checkGoPkg } from "./go.js";
-import { checkRubyGems } from "./rubygems.js";
+import type { CheckResult } from "./types";
+import { checkNpm } from "./npm";
+import { checkGitHub } from "./github";
+import { checkDomains, DEFAULT_TLDS } from "./domain";
+import { checkTwitter } from "./twitter";
+import { checkInstagram } from "./instagram";
+import { checkUSPTOTrademark } from "./trademark";
+import { checkPyPI } from "./pypi";
+import { checkCratesIO } from "./crates";
+import { checkHomebrew } from "./homebrew";
+import { checkLinkedIn } from "./linkedin";
+import { checkTikTok } from "./tiktok";
+import { checkYouTube } from "./youtube";
+import { checkReddit } from "./reddit";
+import { checkDockerHub } from "./dockerhub";
+import { checkGoPkg } from "./go";
+import { checkRubyGems } from "./rubygems";
 
 export interface CheckerDef {
   id: string;

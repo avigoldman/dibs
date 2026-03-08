@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { generateRecommendation } from "../src/recommend.js";
-import type { CheckResult } from "../src/checkers/types.js";
+import { generateRecommendation } from "../src/recommend";
+import type { CheckResult } from "../src/checkers/types";
 
 function makeResults(statuses: Record<string, "available" | "taken" | "error">): CheckResult[] {
   return Object.entries(statuses).map(([platform, status]) => ({
