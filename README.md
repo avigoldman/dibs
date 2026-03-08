@@ -6,18 +6,18 @@ Call dibs on a name — check availability across domains, social media, package
 dibs acme
 ```
 
-dibs checks your name across 16+ platforms simultaneously and tells you what's available and what's taken. Optionally generate variants like `useacme`, `acmehq`, `acmedev` to find the best available version.
+dibs checks your name across 17+ platforms simultaneously and tells you what's available and what's taken. Optionally generate variants like `useacme`, `acmehq`, `acmedev` to find the best available version.
 
 ## Install
 
 ```sh
-npm install -g dibs-cli
+npm install -g calldibs
 ```
 
 Or run directly:
 
 ```sh
-npx dibs-cli acme
+npx calldibs acme
 ```
 
 ## Quick Start
@@ -50,12 +50,12 @@ dibs acme -f csv > report.csv
 
 ## What It Checks
 
-| Category     | Platforms                                                             | Flag IDs                                                                    |
-| ------------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Domains**  | WHOIS lookup for any TLD                                              | `domain`                                                                    |
-| **Social**   | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit       | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit` |
-| **Packages** | npm, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub`          |
-| **Legal**    | USPTO Trademark                                                       | `trademark`                                                                 |
+| Category     | Platforms                                                                      | Flag IDs                                                                      |
+| ------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| **Domains**  | WHOIS lookup for any TLD                                                       | `domain`                                                                      |
+| **Social**   | GitHub, X/Twitter, Instagram, LinkedIn, TikTok, YouTube, Reddit                | `github`, `twitter`, `instagram`, `linkedin`, `tiktok`, `youtube`, `reddit`   |
+| **Packages** | npm, npm org, PyPI, crates.io, RubyGems, Go (pkg.go.dev), Homebrew, Docker Hub | `npm`, `npm-org`, `pypi`, `crates`, `rubygems`, `go`, `homebrew`, `dockerhub` |
+| **Legal**    | USPTO Trademark                                                                | `trademark`                                                                   |
 
 ### Default TLDs
 
@@ -93,16 +93,16 @@ Each check result is one of three statuses:
 
 Platforms are weighted by importance to a business:
 
-| Weight   | Platforms                                       |
-| -------- | ----------------------------------------------- |
-| **15×**  | `.com` domain                                   |
-| **12×**  | USPTO Trademark                                 |
-| **8×**   | X / Twitter                                     |
-| **7×**   | Instagram, LinkedIn                             |
-| **6×**   | GitHub, `.ai` domain                            |
-| **5×**   | TikTok, YouTube, `.com`-adjacent domains        |
-| **4×**   | Reddit, `.co`, `.app` domains                   |
-| **2-3×** | Package registries (npm, PyPI, crates.io, etc.) |
+| Weight   | Platforms                                                |
+| -------- | -------------------------------------------------------- |
+| **15×**  | `.com` domain                                            |
+| **12×**  | USPTO Trademark                                          |
+| **8×**   | X / Twitter                                              |
+| **7×**   | Instagram, LinkedIn                                      |
+| **6×**   | GitHub, `.ai` domain                                     |
+| **5×**   | TikTok, YouTube, `.com`-adjacent domains                 |
+| **4×**   | Reddit, `.co`, `.app` domains                            |
+| **2-3×** | Package registries (npm, npm org, PyPI, crates.io, etc.) |
 
 The weighted score produces a verdict:
 
@@ -139,7 +139,7 @@ dibs acme -f json
     "details": [
       "✗ .com domain is taken — consider a variant or alternative TLD",
       "✗ Only 2/7 social handles available — branding will be inconsistent",
-      "◐ 5/7 package registries available",
+      "◐ 5/8 package registries available",
       "⚠ Possible USPTO trademark conflict — consult a lawyer before proceeding"
     ]
   },
@@ -148,9 +148,9 @@ dibs acme -f json
     "pattern": "bare",
     "score": 28,
     "available": 10,
-    "taken": 12,
+    "taken": 13,
     "errors": 0,
-    "total": 22,
+    "total": 23,
     "results": [
       {
         "platform": "Domain acme.com",
@@ -178,9 +178,9 @@ dibs acme -f json
       "pattern": "bare",
       "score": 28,
       "available": 10,
-      "taken": 12,
+      "taken": 13,
       "errors": 0,
-      "total": 22
+      "total": 23
     }
   ]
 }
@@ -271,8 +271,8 @@ The CLI always exits with code 0 when given valid arguments, regardless of check
 ## Development
 
 ```sh
-git clone https://github.com/your-username/dibs-cli
-cd dibs-cli
+git clone https://github.com/avigoldman/dibs
+cd dibs
 npm install
 
 # Run in development
