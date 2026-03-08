@@ -61,7 +61,7 @@ dibs acme -f csv > report.csv
 
 `.com`, `.dev`, `.io`, `.ai`, `.co`, `.app`
 
-All available TLDs: `.com`, `.dev`, `.io`, `.ai`, `.co`, `.app`, `.org`, `.net`, `.sh`, `.so`, `.run`, `.to`, `.me`, `.cc`, `.xyz`, `.tech`, `.tools`, `.design`, `.studio`, `.inc`
+Any valid IANA TLD is supported (1,400+). Just pass whatever you need via `--tlds`.
 
 ## Variants
 
